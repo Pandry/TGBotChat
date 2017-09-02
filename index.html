@@ -64,17 +64,21 @@
     <div class="text-center">
         <h2 for="chatId">Chat ID:</h2><br/>
         <input type="text" name="chatId" id="chatId" placeholder="Chat ID" /><br/>
-        <div>
-
-        </div>
         <a href="" id="clearRecentChats">Clear Recents</a><br/>
         <h2 for="textMessage">Message:</h2><br/>
         <textarea rows="1" cols="50" name="textMessage" id="textMessage" placeholder="Message"></textarea><br/>
 
-    <a class="btn btn-info" href="#" onclick="sendMessage()" style="margin-top:10px;">Send</a>
-    </div>
+      <a class="btn btn-info" href="#" onclick="sendMessage()" style="margin-top:10px;">Send</a>
+    
+      <div class="form-group mb-0" style="margin-top:10px">
+        <label class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="notificationCheckbox" checked="true">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">Notifications</span>
+        </label>
+      </div>
 
-
+  </div>
 
     <table id="chatHistory" class="table table-striped table-hover table-bordered" style="margin-top:50px;">
             <thead class="thead-inverse">
