@@ -15,10 +15,10 @@ var isNotificationsAllowed = false;
 Notification.requestPermission(function(p){
     if (p == 'denied') {
         isNotificationsAllowed = false;
-        $("#notificationCheckbox").attr("checked","false");
+        $("#notificationCheckbox input").attr("checked","false");
     } else if(p == 'garanted'){
         isNotificationsAllowed = true;
-        $("#notificationCheckbox").attr("checked","true");
+        $("#notificationCheckbox input").attr("checked","true");
     }
 });
 
@@ -172,15 +172,15 @@ setApiToken();
 setInterval(checkNewMessages, 500);
 
 
-$('#notificationCheckbox').change(function() {
+$('#notificationCheckbox input').change(function() {
     if(!isNotificationsAllowed){
         Notification.requestPermission(function(p){
             if (p == 'denied') {
                 isNotificationsAllowed = false;
-                $("#notificationCheckbox").attr("checked","false");
+                $("#notificationCheckbox input").attr("checked","false");
             } else if(p == 'garanted'){
                 isNotificationsAllowed = true;
-                $("#notificationCheckbox").attr("checked","true");
+                $("#notificationCheckbox input").attr("checked","true");
             }
         });
     }
