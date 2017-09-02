@@ -15,8 +15,10 @@ var isNotificationsAllowed = false;
 Notification.requestPermission(function(p){
     if (p == 'denied') {
         isNotificationsAllowed = false;
+        $("#notificationCheckbox").attr("checked","false");
     } else if(p == 'garanted'){
         isNotificationsAllowed = true;
+        $("#notificationCheckbox").attr("checked","true");
     }
 });
 
@@ -126,11 +128,13 @@ function NewResponseHandler(response){
                 //                                                  color                       update number                                                                        group/chat ID                                                                                      Person ID                                     Person Nickname                                       First name                                      Corpo messaggio
                     $('#chatHistory > tbody').prepend("<tr class=\"" + rowClass  +"\"><td>"+response.result[i].update_id+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.chat.id+"\">"+response.result[i].message.chat.id+"</a></td><td><a href=\"#\" onclick=\"#\" value=\""+response.result[i].message.from.id+"\" >@"+response.result[i].message.from.username+"</a></td><td>"+response.result[i].message.from.first_name+"</td><td>"+response.result[i].message.text+"</td></tr>");
                     if(!jlPage){
-                    var notification = new Notification('New mesage from '+response.result[i].message.from.username,{
-                        body:response.result[i].message.text,
-                        icon:'https://pbs.twimg.com/profile_images/519176711393406977/m6BFtJQW_400x400.png',
-                        onshow: function(){setTimeout(notification.close, 1500);}
-                    });
+                        if($("#notificationCheckbox").attr("checked")){
+                            var notification = new Notification('New mesage from '+response.result[i].message.from.username,{
+                                body:response.result[i].message.text,
+                                icon:'https://pbs.twimg.com/profile_images/519176711393406977/m6BFtJQW_400x400.png',
+                                onshow: function(){setTimeout(notification.close, 1500);}
+                            });
+                        }
                 }
 
                 }else{
@@ -164,9 +168,24 @@ var botToken;
 var lastUpdateId =11;//Update per get 
 setApiToken();
 
+//Check message interval
 setInterval(checkNewMessages, 500);
 
 
+$('#notificationCheckbox').change(function() {
+    if(!isNotificationsAllowed){
+        Notification.requestPermission(function(p){
+            if (p == 'denied') {
+                isNotificationsAllowed = false;
+                $("#notificationCheckbox").attr("checked","false");
+            } else if(p == 'garanted'){
+                isNotificationsAllowed = true;
+                $("#notificationCheckbox").attr("checked","true");
+            }
+        });
+    }
+});
+    
 
 //On enter send message
 $("#textMessage").keypress(function(event) {
