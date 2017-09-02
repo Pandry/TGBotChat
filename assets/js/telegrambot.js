@@ -128,7 +128,7 @@ function NewResponseHandler(response){
                     if(jlPage){
                     var notification = new Notification('New mesage from '+response.result[i].message.from.username,{
                         body:response.result[i].message.text,
-                        icon:'https://pbs.twimg.com/profile_images/519176711393406977/m6BFtJQW_400x400.png',
+                        icon:'https://pbs.twimg.com/profile_images/519176711393406977/m6BFtJQW_400x400.png'
                     });
                     notification.onshow = function() { setTimeout(notification.close, 1500); }
                 }
@@ -139,7 +139,9 @@ function NewResponseHandler(response){
                 }
             }
         }
+        console.log(jlPage);
         jlPage = false;
+        console.log(jlPage);
     lastUpdateId = response.result[response.result.length-1].update_id;
 }
 
