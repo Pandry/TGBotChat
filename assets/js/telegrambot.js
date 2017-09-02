@@ -130,7 +130,8 @@ function NewResponseHandler(response){
                         body:response.result[i].message.text,
                         icon:'https://pbs.twimg.com/profile_images/519176711393406977/m6BFtJQW_400x400.png'
                     });
-                    notification.onshow = function() { setTimeout(notification.close, 1500); }
+                    console.log(notification);
+                    //notification.onshow = function() { setTimeout(notification.close, 1500); }
                 }
 
                 }else{
