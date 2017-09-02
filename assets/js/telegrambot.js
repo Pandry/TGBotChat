@@ -1,8 +1,26 @@
+//Save last chat ID
 if (typeof(Storage) !== "undefined") {
     if(localStorage.getItem("lastChatID") != null ){
         $("#chatId").val(localStorage.getItem("lastChatID"));
     }
 }
+
+//Notification permission var
+var isNotificationsAllowed = false;
+
+//Ask notification permission
+Notification.requestPermission(function(p){
+    if (p == 'denied') {
+        isNotificationsAllowed = false;
+    } else if(p == 'garanted'){
+        isNotificationsAllowed = true;
+    }
+});
+
+
+
+
+
 
 
 function setApiToken(forced){
@@ -104,6 +122,14 @@ function NewResponseHandler(response){
                     if(response.result[i].message.chat.id<0){rowClass = "table-info";}else{rowClass = "table-success";} 
                 //                                                  color                       update number                                                                        group/chat ID                                                                                      Person ID                                     Person Nickname                                       First name                                      Corpo messaggio
                     $('#chatHistory > tbody').prepend("<tr class=\"" + rowClass  +"\"><td>"+response.result[i].update_id+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.chat.id+"\">"+response.result[i].message.chat.id+"</a></td><td><a href=\"#\" onclick=\"#\" value=\""+response.result[i].message.from.id+"\" >@"+response.result[i].message.from.username+"</a></td><td>"+response.result[i].message.from.first_name+"</td><td>"+response.result[i].message.text+"</td></tr>");
+                    var notification = new Notification('New mesage from '+response.result[i].message.from.username,{
+                        body:response.result[i].message.text,
+                        icon:'http://www.freeiconspng.com/uploads/telegram-icon-14.png',
+                        //tag:'1234'
+                    });
+                    notification.onshow = function() { setTimeout(notification.close, 1500); }
+                console.log(notification);
+
                 }else{
                     //Messaggio editato
                     $('#chatHistory > tbody').prepend("<tr class=\"table-warning\"><td>"+response.result[i].update_id+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].edited_message.chat.id+"\">"+response.result[i].edited_message.chat.id+"</a></td><td><a href=\"#\" onclick=\"#\" value=\""+response.result[i].edited_message.from.id+"\" >@"+response.result[i].edited_message.from.username+"</a></td><td>"+response.result[i].edited_message.from.first_name+"</td><td>"+response.result[i].edited_message.text+"</td></tr>");
