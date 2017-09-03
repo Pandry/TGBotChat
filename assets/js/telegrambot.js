@@ -146,11 +146,11 @@ function NewResponseHandler(response){
                             body:response.result[i].message.text,
                             tag:  "push-notification-tag",
                             icon:'https://pbs.twimg.com/profile_images/519176711393406977/m6BFtJQW_400x400.png',
-                            //Pew sound on notification
-                            //Thanks to malware tech :3
-                            sound: 'https://intel.malwaretech.com/sounds/pew.mp3',
                             onshow: function(){setTimeout(notification.close, 1500);}
                         });
+                        //Pew sound on notification
+                        //Thanks to malware tech :3
+                        new Audio('https://intel.malwaretech.com/sounds/pew.mp3').play();
                     }
                 }
             }else{
