@@ -99,6 +99,7 @@ function sendMessage(){
             return;
         }else if (HttpMessageSender.readyState === XMLHttpRequest.DONE){
             swal("Damn!", "An error occourred.", "error");
+            return;
         }
       };
     HttpMessageSender.send(null);
