@@ -83,7 +83,12 @@ function setApiToken(forced){
 function sendMessage(){
     var chatMessage = $("#textMessage").val();
     var chatId = $("#chatId").val();
-
+    
+    if(chatMessage==""){
+        swal("Attention please :3!", "You could have forgot to enter the message :3", "info");
+        return;
+    }
+    
     var HttpMessageSender = new XMLHttpRequest();
     HttpMessageSender.open("GET", "https://api.telegram.org/bot"+botToken+"/sendMessage?chat_id="+chatId+"&text="+encodeURI(chatMessage), true); // true for asynchronous 
     HttpMessageSender.onreadystatechange = function () {
