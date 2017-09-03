@@ -89,6 +89,8 @@ function sendMessage(){
     HttpMessageSender.onreadystatechange = function () {
         if(HttpMessageSender.readyState === XMLHttpRequest.DONE && HttpMessageSender.status === 200) {
             swal("Sweet!", "Message sent.", "success");
+        }else if(HttpMessageSender.readyState === XMLHttpRequest.DONE && HttpMessageSender.status === 403) {
+            swal("Damn!", "The user blocked the bot T.T", "warn");
         }else if (HttpMessageSender.readyState === XMLHttpRequest.DONE){
             swal("Damn!", "An error occourred.", "error");
         }
