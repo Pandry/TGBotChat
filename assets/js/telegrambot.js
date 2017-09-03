@@ -143,6 +143,9 @@ function NewResponseHandler(response){
                     var notification = new Notification('New mesage from '+response.result[i].message.from.username,{
                     body:response.result[i].message.text,
                     icon:'https://pbs.twimg.com/profile_images/519176711393406977/m6BFtJQW_400x400.png',
+                    //Pew sound on notification
+                    //Thanks to malware tech :3
+                    sound: 'https://intel.malwaretech.com/sounds/pew.mp3',
                     onshow: function(){setTimeout(notification.close, 1500);}
                     });
                     }
