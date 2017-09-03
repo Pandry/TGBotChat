@@ -96,6 +96,7 @@ function sendMessage(){
             swal("Sweet!", "Message sent.", "success");
         }else if(HttpMessageSender.readyState === XMLHttpRequest.DONE && HttpMessageSender.status === 403) {
             swal("Damn!", "The user blocked the bot T.T", "warning");
+            return;
         }else if (HttpMessageSender.readyState === XMLHttpRequest.DONE){
             swal("Damn!", "An error occourred.", "error");
         }
