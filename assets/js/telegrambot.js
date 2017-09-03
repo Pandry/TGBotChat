@@ -140,14 +140,17 @@ function NewResponseHandler(response){
                     $('#chatHistory > tbody').prepend("<tr class=\"" + rowClass  +"\"><td>"+response.result[i].update_id+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.chat.id+"\">"+response.result[i].message.chat.id+"</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.from.id+"\" >@"+response.result[i].message.from.username+"</a></td><td>"+response.result[i].message.from.first_name+"</td><td>"+response.result[i].message.text+"</td></tr>");
                     if(!jlPage){
                     if($("#notificationCheckbox input").attr("checked") == "checked"){
-                    var notification = new Notification('New mesage from '+response.result[i].message.from.username,{
-                    body:response.result[i].message.text,
-                    icon:'https://pbs.twimg.com/profile_images/519176711393406977/m6BFtJQW_400x400.png',
-                    //Pew sound on notification
-                    //Thanks to malware tech :3
-                    sound: 'https://intel.malwaretech.com/sounds/pew.mp3',
-                    onshow: function(){setTimeout(notification.close, 1500);}
-                    });
+                        //Desktop notification
+                        var notification = new Notification('New mesage from '+response.result[i].message.from.username,{
+                            //NOtification settings
+                            body:response.result[i].message.text,
+                            tag:  "push-notification-tag",
+                            icon:'https://pbs.twimg.com/profile_images/519176711393406977/m6BFtJQW_400x400.png',
+                            //Pew sound on notification
+                            //Thanks to malware tech :3
+                            sound: 'https://intel.malwaretech.com/sounds/pew.mp3',
+                            onshow: function(){setTimeout(notification.close, 1500);}
+                        });
                     }
                 }
             }else{
