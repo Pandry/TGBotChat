@@ -56,7 +56,10 @@ function setApiToken(forced){
 //Should be improved passing the text to be sent as a parameter
 function sendMessage(){
     var chatMessage = $("#textMessage").val();
-    var chatId = $("#chatId").val();
+    var chatId = $("#chatId").val().split(':')[0];
+    var replyMessageId = $("#chatId").val().split(':')[1];
+    
+    
     //Check if message is empty
     if(chatMessage==""){
         swal("Attention please :3!", "You could have forgot to enter the message :3", "info");
@@ -64,7 +67,7 @@ function sendMessage(){
     }
     //Sending
     var HttpMessageSender = new XMLHttpRequest();
-    HttpMessageSender.open("GET", "https://api.telegram.org/bot"+botToken+"/sendMessage?chat_id="+chatId+"&text="+encodeURI(chatMessage), true); // true for asynchronous 
+    HttpMessageSender.open("GET", "https://api.telegram.org/bot"+botToken+"/sendMessage?chat_id="+chatId+"&text="+encodeURI(chatMessage)+replyMessageId!=undefined?"&reply_to_message_id="+replyMessageId:"", true); // true for asynchronous 
     HttpMessageSender.onreadystatechange = function () {
         if(HttpMessageSender.readyState === XMLHttpRequest.DONE && HttpMessageSender.status === 200) {
             swal("Sweet!", "Message sent.", "success");
@@ -131,7 +134,7 @@ function NewResponseHandler(response){
                             console.log("Undefined message...",response.result[i]);
                         }
                         logNewMessage(response.result[i]);
-                        $('#chatHistory > tbody').prepend("<tr class=\"" + rowClass  +"\"><td>"+response.result[i].update_id+"</td><td>"+recDate.toLocaleString()+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.chat.id+"\">"+response.result[i].message.chat.id+"</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.from.id+"\" >@"+response.result[i].message.from.username+"</a></td><td>"+response.result[i].message.from.first_name+"</td><td class=\""+messageClass+"\">"+messageBody+"</td></tr>");
+                        $('#chatHistory > tbody').prepend("<tr class=\"" + rowClass  +"\"><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].edited_message.chat.id+":"+response.result[i].update_id+"\">"+response.result[i].update_id+"</a></td><td>"+recDate.toLocaleString()+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.chat.id+"\">"+response.result[i].message.chat.id+"</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.from.id+"\" >@"+response.result[i].message.from.username+"</a></td><td>"+response.result[i].message.from.first_name+"</td><td class=\""+messageClass+"\">"+messageBody+"</td></tr>");
                     
                         addChatNumber(response.result[i].message.chat.id, findNickById(response.result[i].message.chat.id));
                     }
@@ -153,7 +156,7 @@ function NewResponseHandler(response){
             }else{
                 var recDate = new Date(response.result[i].edited_message.date*1000);
                 //Edited message
-                $('#chatHistory > tbody').prepend("<tr class=\"table-warning\"><td>"+response.result[i].update_id+"</td><td>"+recDate.toLocaleString()+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].edited_message.chat.id+"\">"+response.result[i].edited_message.chat.id+"</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].edited_message.from.id+"\" >@"+response.result[i].edited_message.from.username+"</a></td><td>"+response.result[i].edited_message.from.first_name+"</td><td>"+response.result[i].edited_message.text+"</td></tr>");
+                $('#chatHistory > tbody').prepend("<tr class=\"table-warning\"><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].edited_message.chat.id+":"+response.result[i].update_id+"\">"+response.result[i].update_id+"</a></td><td>"+recDate.toLocaleString()+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].edited_message.chat.id+"\">"+response.result[i].edited_message.chat.id+"</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].edited_message.from.id+"\" >@"+response.result[i].edited_message.from.username+"</a></td><td>"+response.result[i].edited_message.from.first_name+"</td><td>"+response.result[i].edited_message.text+"</td></tr>");
             }
         }
     }
