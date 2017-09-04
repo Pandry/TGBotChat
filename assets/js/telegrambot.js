@@ -199,7 +199,7 @@ $('#notificationCheckbox input').change(function() {
     
 
 //On enter send message
-$("#textMessage").keypress(function(event) {
+$(document).keypress(function(event) {
     if( (event.keyCode == 10 || event.keyCode == 13) && event.ctrlKey) {
         sendMessage();
     }
