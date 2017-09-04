@@ -66,8 +66,9 @@ function sendMessage(){
         return;
     }
     //Sending
+    var sendRequest = "https://api.telegram.org/bot"+botToken+"/sendMessage?chat_id="+chatId+"&text="+encodeURI(chatMessage)+replyMessageId!=undefined?"&reply_to_message_id="+replyMessageId:"";
     var HttpMessageSender = new XMLHttpRequest();
-    HttpMessageSender.open("GET", "https://api.telegram.org/bot"+botToken+"/sendMessage?chat_id="+chatId+"&text="+encodeURI(chatMessage)+replyMessageId!=undefined?"&reply_to_message_id="+replyMessageId:"", true); // true for asynchronous 
+    HttpMessageSender.open("GET",sendRequest , true); // true for asynchronous 
     HttpMessageSender.onreadystatechange = function () {
         if(HttpMessageSender.readyState === XMLHttpRequest.DONE && HttpMessageSender.status === 200) {
             swal("Sweet!", "Message sent.", "success");
