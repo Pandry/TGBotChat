@@ -123,7 +123,7 @@ function NewResponseHandler(response){
                     }else if (response.result[i].message.sticker != undefined){
                         //Sticker
                         messageBody = "Sticker ["+response.result[i].message.sticker.emoji + "]";
-                    }else if(response.message.left_chat_member == null){
+                    }else if(response.result[i].message.left_chat_member == null){
                         messageBody = "User left [@"+response.message.left_chat_member.username + "]";
                     }else{
                         messageBody = response.result[i].message.text;
