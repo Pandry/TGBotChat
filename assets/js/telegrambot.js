@@ -126,6 +126,8 @@ function checkNewMessages(){
 }
 
 function NewResponseHandler(response){
+    //console.log(response);
+    //message.chat.date
     for(var i = 0; i < response.result.length; i++){
         if(response.result[i].update_id > lastUpdateId){
             var rowClass;
@@ -134,8 +136,25 @@ function NewResponseHandler(response){
                 //Check if the message comes from a group chat
                 //Need to be improved by checking tif the message is private or not
                 //Assign a blue background if the message is from a group, a geen one if it's from a user via direct chat
+                var recDate = new Date(response.result[i].message.date*1000);
+                var messageBody="";
+                var messageClass;
                 if(response.result[i].message.chat.id<0){rowClass = "table-info";}else{rowClass = "table-success";} 
-                    $('#chatHistory > tbody').prepend("<tr class=\"" + rowClass  +"\"><td>"+response.result[i].update_id+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.chat.id+"\">"+response.result[i].message.chat.id+"</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.from.id+"\" >@"+response.result[i].message.from.username+"</a></td><td>"+response.result[i].message.from.first_name+"</td><td>"+response.result[i].message.text+"</td></tr>");
+                    if(response.result[i].message.new_chat_participant != undefined){
+                        //New user to the group"
+                        messageBody = "New user";
+                        messageClass = "table-success";
+                    }else if (response.result[i].message.sticker != undefined){
+                        //Sticker
+                        messageBody = "Sticker ["+response.result[i].message.sticker.emoji + "]";
+                    }
+                    else{
+                        messageBody = response.result[i].message.text;
+                        if(messageBody == undefined){
+                            console.log(response.result[i]);
+                        }
+                        $('#chatHistory > tbody').prepend("<tr class=\"" + rowClass  +"\"><td>"+response.result[i].update_id+"</td><td>"+recDate.toLocaleString()+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.chat.id+"\">"+response.result[i].message.chat.id+"</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.from.id+"\" >@"+response.result[i].message.from.username+"</a></td><td>"+response.result[i].message.from.first_name+"</td><td class=\""+messageClass+"\">"+messageBody+"</td></tr>");
+                    }
                     if(!jlPage){
                     if($("#notificationCheckbox input").attr("checked") == "checked"){
                         //Desktop notification
@@ -152,8 +171,9 @@ function NewResponseHandler(response){
                     }
                 }
             }else{
+                var recDate = new Date(response.result[i].edited_message.date*1000);
                 //Edited message
-                $('#chatHistory > tbody').prepend("<tr class=\"table-warning\"><td>"+response.result[i].update_id+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].edited_message.chat.id+"\">"+response.result[i].edited_message.chat.id+"</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].edited_message.from.id+"\" >@"+response.result[i].edited_message.from.username+"</a></td><td>"+response.result[i].edited_message.from.first_name+"</td><td>"+response.result[i].edited_message.text+"</td></tr>");
+                $('#chatHistory > tbody').prepend("<tr class=\"table-warning\"><td>"+response.result[i].update_id+"</td><td>"+recDate.toLocaleString()+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].edited_message.chat.id+"\">"+response.result[i].edited_message.chat.id+"</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].edited_message.from.id+"\" >@"+response.result[i].edited_message.from.username+"</a></td><td>"+response.result[i].edited_message.from.first_name+"</td><td>"+response.result[i].edited_message.text+"</td></tr>");
             }
         }
     }
