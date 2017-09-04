@@ -73,7 +73,7 @@ function sendMessage(){
             //Save ID
             addChatNumber(chatId, findNickById(chatId));
         }else if(HttpMessageSender.readyState === XMLHttpRequest.DONE && HttpMessageSender.status === 403) {
-            swal("Damn!", "The user blocked the bot T.T", "warning");
+            swal("Damn!", "The user blocked the bot T.T <br/>(or he never started it)", "warning");
             return;
         }else if (HttpMessageSender.readyState === XMLHttpRequest.DONE){
             swal("Damn!", "An error occourred.", "error");
@@ -177,7 +177,7 @@ function NotificationsPermisionChecker(){
                     isNotificationsAllowed = false;
                     $("#notificationCheckbox input").prop("checked",false);
                     if (p == 'denied'){
-                        swal("Oh no!", "You blocked the ntifications for this site, you need to unblock them if you want to receive notifications!", "error");
+                        swal("Oh no!", "You blocked the notifications for this site, you need to unblock them if you want to receive notifications!", "error");
                     }
                 }else if(p == 'garanted' && $("#notificationCheckbox input").prop("checked")){
                     localStorage.setItem("AllowNotifications", $("#notificationCheckbox input").prop("checked"));
