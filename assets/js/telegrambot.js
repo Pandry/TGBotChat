@@ -188,8 +188,7 @@ function NotificationsPermisionChecker(){
 
 
 function logNewMessage(response){
-    var nick = response.message.chat.title==null?response.message.from.username:response.message.chat.title;
-    messagesLog.unshift({id : response.message.from.id, nick: nick, message : response.message.text});
+    messagesLog.unshift({id : response.message.chat.id, nick: response.message.chat.title==null?response.message.from.username:response.message.chat.title, message : response.message.text});
 }
 
 
@@ -220,15 +219,17 @@ function addChatNumber(chatId, nickname){
     recentChats.unshift({"id" : chatId, "nick": nickname});
     localStorage.setItem("recentChats", JSON.stringify(recentChats));
 
-    $("#recentChatsDropdownDiv").empty();
-    for(var i = 0; i < recentChats.length && i <=5; i++){
-        $("#recentChatsDropdownDiv").prepend("<a class=\"dropdown-item\" href=\"#\" onclick=\"replyToId(event)\" value=\""+recentChats[i].id+"\">"+findNickById(recentChats[i].id)+"</a>");
+    if(recentChats.length > 5){
+        populateHistory();
     }
 }
 
-
-
-
+function populateHistory(){
+    var recentChats = JSON.parse(localStorage.getItem("recentChats"));
+    for(var i = 0; i < recentChats.length && i <=5; i++){
+        $("#recentChatsDropdownDiv").prepend("<a class=\"dropdown-item\" href=\"#\" onclick=\"replyToId(event)\" value=\""+recentChats[recentChats.length-1 - i].id+"\">"+recentChats[recentChats.length-1 - i].nick+"</a>");
+    }
+}
 
 
 
@@ -265,6 +266,7 @@ if (typeof(Storage) !== "undefined") {
     }
 }
 
+populateHistory();
 
 
 ////

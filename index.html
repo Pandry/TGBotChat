@@ -25,18 +25,22 @@
           table a{
             color: white;
           }
+          .centered{
+            margin-right: auto;
+            margin-left: auto;
+          }
           </style>
         
 </head>
 <body>
 
         <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary"><!-- navbar-inverse -->
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarC01" aria-controls="navbarC01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
                 <a class="navbar-brand" href="#">Telegram chat</a>
               
-                <div class="collapse navbar-collapse" id="navbarColor01">
+                <div class="collapse navbar-collapse" id="navbarC01">
                   <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                       <a class="nav-link" href="#" onclick="setApiToken(true)"><!--<span class="sr-only">-->Change Token<!--</span>--></a>
@@ -60,10 +64,26 @@
 <div class="container" style="top: 20px;">
     
 
-
+  
     <div class="text-center">
         <h2 for="chatId">Chat ID:</h2><br/>
-        <input type="text" name="chatId" id="chatId" placeholder="Chat ID" /><br/>
+        <div class="input-group centered" style="width: 300px;">
+          <input type="text" class="form-control" aria-label="Chat ID" name="chatId" id="chatId" placeholder="Chat ID">
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              
+            </button>
+            <div class="dropdown-menu" id="recentChatsDropdownDiv">
+            </div>
+          </div>
+         
+        </div>
+
+        
+
+
+
+
         <a href="" id="clearRecentChats">Clear Recents</a><br/>
         <h2 for="textMessage">Message:</h2><br/>
         <textarea rows="2" cols="50" name="textMessage" id="textMessage" placeholder="Message"></textarea><br/>
