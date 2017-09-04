@@ -70,6 +70,8 @@ function sendMessage(){
             swal("Sweet!", "Message sent.", "success");
             //Clear Text area
             $("#textMessage").val("");
+            //Save ID
+            addChatNumber(chatId, findNickById(chatId));
         }else if(HttpMessageSender.readyState === XMLHttpRequest.DONE && HttpMessageSender.status === 403) {
             swal("Damn!", "The user blocked the bot T.T", "warning");
             return;
@@ -129,7 +131,10 @@ function NewResponseHandler(response){
                         if(messageBody == undefined){
                             console.log(response.result[i]);
                         }
+                        logNewMessage(response.result[i]);
                         $('#chatHistory > tbody').prepend("<tr class=\"" + rowClass  +"\"><td>"+response.result[i].update_id+"</td><td>"+recDate.toLocaleString()+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.chat.id+"\">"+response.result[i].message.chat.id+"</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.from.id+"\" >@"+response.result[i].message.from.username+"</a></td><td>"+response.result[i].message.from.first_name+"</td><td class=\""+messageClass+"\">"+messageBody+"</td></tr>");
+                    
+                        addChatNumber(response.result[i].message.chat.id, findNickById(response.result[i].message.chat.id));
                     }
                     if(!jlPage){
                     if($("#notificationCheckbox input").prop("checked")){
@@ -158,8 +163,6 @@ function NewResponseHandler(response){
 }
 
 
-
-
 //Function used to replying to a user clicking on its username or ID
 function replyToId(event){
     $("#chatId").val(event.toElement.getAttribute("value"));
@@ -184,6 +187,47 @@ function NotificationsPermisionChecker(){
 }
 
 
+function logNewMessage(response){
+    var nick = response.message.chat.title==null?response.message.from.username:response.message.chat.title;
+    messagesLog.unshift({id : response.message.from.id, nick: nick, message : response.message.text});
+}
+
+
+function findNickById(chatId){
+    for(var i = 0; i < messagesLog.length; i++){
+        if(chatId == messagesLog[i].id){
+            return messagesLog[i].nick;
+        }
+    }
+    return "Unnamed";
+}
+
+
+
+
+function addChatNumber(chatId, nickname){
+    var recentChats =localStorage.getItem("recentChats");
+    if(recentChats!=null){
+        recentChats = JSON.parse(recentChats);
+        for(var i = 0; i < recentChats.length; i++){
+            if(chatId == recentChats[i].id){
+                recentChats.splice(i, 1);
+            }
+        }
+    }else{
+        recentChats =[];
+    }
+    recentChats.unshift({"id" : chatId, "nick": nickname});
+    localStorage.setItem("recentChats", JSON.stringify(recentChats));
+
+    $("#recentChatsDropdownDiv").empty();
+    for(var i = 0; i < recentChats.length && i <=5; i++){
+        $("#recentChatsDropdownDiv").prepend("<a class=\"dropdown-item\" href=\"#\" onclick=\"replyToId(event)\" value=\""+recentChats[i].id+"\">"+findNickById(recentChats[i].id)+"</a>");
+    }
+}
+
+
+
 
 
 
@@ -192,6 +236,8 @@ function NotificationsPermisionChecker(){
 //  Startup functions
 ////
 
+var messagesLog = [];
+
 //just loaded page var
 var jlPage = true;
 
@@ -199,9 +245,7 @@ var jlPage = true;
 var isNotificationsAllowed = false;
 
 //Ask notification permission
-Notification.requestPermission(function(p){
-    NotificationsPermisionChecker();
-});
+NotificationsPermisionChecker();
 
 if(localStorage.getItem("AllowNotifications")!= null){
     $("#notificationCheckbox input").prop("checked",localStorage.getItem("AllowNotifications"));
@@ -220,9 +264,6 @@ if (typeof(Storage) !== "undefined") {
         $("#chatId").val(localStorage.getItem("lastChatID"));
     }
 }
-
-
-
 
 
 
@@ -246,6 +287,6 @@ $(document).keypress(function(event) {
 
 //Clear the message hostory
 //Needs to be fixed - refreshes the page
-$('#clearRecentChats').click(function(){
+$('#clearrecentChatss').click(function(){
     $('#chatHistory > tbody').html(''); 
    });
