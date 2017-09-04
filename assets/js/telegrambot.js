@@ -1,27 +1,3 @@
-//Save last chat ID
-if (typeof(Storage) !== "undefined") {
-    if(localStorage.getItem("lastChatID") != null ){
-        $("#chatId").val(localStorage.getItem("lastChatID"));
-    }
-}
-
-//just loaded page var
-var jlPage = true;
-
-//Notification permission var
-var isNotificationsAllowed = false;
-
-//Ask notification permission
-Notification.requestPermission(function(p){
-    if (p == 'denied') {
-        isNotificationsAllowed = false;
-        $("#notificationCheckbox input").attr("checked","false");
-    } else if(p == 'garanted'){
-        isNotificationsAllowed = true;
-        $("#notificationCheckbox input").attr("checked","true");
-    }
-});
-
 //Set the Telegram bot API token
 function setApiToken(forced){
     if (typeof(Storage) !== "undefined") {
@@ -156,7 +132,7 @@ function NewResponseHandler(response){
                         $('#chatHistory > tbody').prepend("<tr class=\"" + rowClass  +"\"><td>"+response.result[i].update_id+"</td><td>"+recDate.toLocaleString()+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.chat.id+"\">"+response.result[i].message.chat.id+"</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.from.id+"\" >@"+response.result[i].message.from.username+"</a></td><td>"+response.result[i].message.from.first_name+"</td><td class=\""+messageClass+"\">"+messageBody+"</td></tr>");
                     }
                     if(!jlPage){
-                    if($("#notificationCheckbox input").attr("checked") == "checked"){
+                    if($("#notificationCheckbox input").prop("checked")){
                         //Desktop notification
                         var notification = new Notification('New mesage from '+response.result[i].message.from.username,{
                             //NOtification settings
@@ -200,21 +176,49 @@ setApiToken();//Try to set the token if not setted (it's not forced)
 //Check message interval
 setInterval(checkNewMessages, 500);
 
-//Handles notification 
+//Save last chat ID
+if (typeof(Storage) !== "undefined") {
+    if(localStorage.getItem("lastChatID") != null ){
+        $("#chatId").val(localStorage.getItem("lastChatID"));
+    }
+}
+
+//just loaded page var
+var jlPage = true;
+
+//Notification permission var
+var isNotificationsAllowed = false;
+
+////
+//  Event notifications
+////
+
+/// Notifications
+
+//Ask notification permission
+Notification.requestPermission(function(p){
+    if (p != 'granted') {
+        isNotificationsAllowed = false;
+        $("#notificationCheckbox input").prop("checked",false);
+    }
+});
+
+//Handles notification checkbox change
 $('#notificationCheckbox input').change(function() {
     if(!isNotificationsAllowed){
         Notification.requestPermission(function(p){
-            if (p == 'denied') {
-                isNotificationsAllowed = false;
-                $("#notificationCheckbox input").attr("checked","false");
-            } else if(p == 'garanted'){
-                isNotificationsAllowed = true;
-                $("#notificationCheckbox input").attr("checked","true");
-            }
+                if (p != 'garanted') {
+                    isNotificationsAllowed = false;
+                    $("#notificationCheckbox input").prop("checked",false);
+                    if (p == 'denied'){
+                        swal("Oh no!", "You blocked the ntifications for this site, you need to unblock them if you want to receive notifications!", "error");
+                    }
+                }
         });
     }
 });
-    
+
+/// Send Shortcut
 
 //On enter send message
 $(document).keypress(function(event) {
