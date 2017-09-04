@@ -92,6 +92,8 @@ function sendMessage(){
     HttpMessageSender.onreadystatechange = function () {
         if(HttpMessageSender.readyState === XMLHttpRequest.DONE && HttpMessageSender.status === 200) {
             swal("Sweet!", "Message sent.", "success");
+            //Clear Text area
+            $("#textMessage").val("");
         }else if(HttpMessageSender.readyState === XMLHttpRequest.DONE && HttpMessageSender.status === 403) {
             swal("Damn!", "The user blocked the bot T.T", "warning");
             return;
@@ -103,8 +105,6 @@ function sendMessage(){
     HttpMessageSender.send(null);
     HttpMessageSender.onreadystatechange
     
-    //Clear Text area
-    $("#textMessage").val("");
     //Save last chat ID
     localStorage.setItem("lastChatID", chatId);
 }
