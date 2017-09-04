@@ -104,8 +104,6 @@ function checkNewMessages(){
 }
 
 function NewResponseHandler(response){
-    //console.log(response);
-    //message.chat.date
     for(var i = 0; i < response.result.length; i++){
         if(response.result[i].update_id > lastUpdateId){
             var rowClass;
@@ -129,7 +127,7 @@ function NewResponseHandler(response){
                     else{
                         messageBody = response.result[i].message.text;
                         if(messageBody == undefined){
-                            console.log(response.result[i]);
+                            console.log("Undefined message...",response.result[i]);
                         }
                         logNewMessage(response.result[i]);
                         $('#chatHistory > tbody').prepend("<tr class=\"" + rowClass  +"\"><td>"+response.result[i].update_id+"</td><td>"+recDate.toLocaleString()+"</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.chat.id+"\">"+response.result[i].message.chat.id+"</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\""+response.result[i].message.from.id+"\" >@"+response.result[i].message.from.username+"</a></td><td>"+response.result[i].message.from.first_name+"</td><td class=\""+messageClass+"\">"+messageBody+"</td></tr>");
