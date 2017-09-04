@@ -119,8 +119,6 @@ function checkNewMessages(){
             var response = JSON.parse(this.responseText);
             //Call to a function that handles and write down in the page new messages
             NewResponseHandler(response);
-        }else if (HttpMessageSender.readyState === XMLHttpRequest.DONE){
-            console.error("Damn! An error occourred.");
         }
       };
     HttpMessageSender.send(null);
