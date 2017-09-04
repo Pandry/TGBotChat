@@ -157,17 +157,55 @@ function NewResponseHandler(response){
     jlPage = false;
 }
 
-//Clear the message hostory
-//Needs to be fixed
-$('#clearRecentChats').click(function(){
-    $('#chatHistory > tbody').html(''); 
-   });
+
+
 
 //Function used to replying to a user clicking on its username or ID
 function replyToId(event){
     $("#chatId").val(event.toElement.getAttribute("value"));
 }
 
+
+
+function NotificationsPermisionChecker(){
+    if(!isNotificationsAllowed){
+        Notification.requestPermission(function(p){
+                if (p != 'garanted') {
+                    isNotificationsAllowed = false;
+                    $("#notificationCheckbox input").prop("checked",false);
+                    if (p == 'denied'){
+                        swal("Oh no!", "You blocked the ntifications for this site, you need to unblock them if you want to receive notifications!", "error");
+                    }
+                }else if(p == 'garanted' && $("#notificationCheckbox input").prop("checked")){
+                    localStorage.setItem("AllowNotifications", $("#notificationCheckbox input").prop("checked"));
+                }
+        });
+    }
+}
+
+
+
+
+
+
+////
+//  Startup functions
+////
+
+//just loaded page var
+var jlPage = true;
+
+//Notification permission var
+var isNotificationsAllowed = false;
+
+//Ask notification permission
+Notification.requestPermission(function(p){
+    NotificationsPermisionChecker();
+});
+
+if(localStorage.getItem("AllowNotifications")!= null){
+    $("#notificationCheckbox input").prop("checked",localStorage.getItem("AllowNotifications"));
+}
 
 var botToken;//var containing the bot token
 var lastUpdateId =11;//Last update id received
@@ -183,39 +221,18 @@ if (typeof(Storage) !== "undefined") {
     }
 }
 
-//just loaded page var
-var jlPage = true;
 
-//Notification permission var
-var isNotificationsAllowed = false;
+
+
+
 
 ////
-//  Event notifications
+//  Event Handlers
 ////
-
-/// Notifications
-
-//Ask notification permission
-Notification.requestPermission(function(p){
-    if (p != 'granted') {
-        isNotificationsAllowed = false;
-        $("#notificationCheckbox input").prop("checked",false);
-    }
-});
 
 //Handles notification checkbox change
 $('#notificationCheckbox input').change(function() {
-    if(!isNotificationsAllowed){
-        Notification.requestPermission(function(p){
-                if (p != 'garanted') {
-                    isNotificationsAllowed = false;
-                    $("#notificationCheckbox input").prop("checked",false);
-                    if (p == 'denied'){
-                        swal("Oh no!", "You blocked the ntifications for this site, you need to unblock them if you want to receive notifications!", "error");
-                    }
-                }
-        });
-    }
+    NotificationsPermisionChecker();
 });
 
 /// Send Shortcut
@@ -226,3 +243,9 @@ $(document).keypress(function(event) {
         sendMessage();
     }
 });
+
+//Clear the message hostory
+//Needs to be fixed - refreshes the page
+$('#clearRecentChats').click(function(){
+    $('#chatHistory > tbody').html(''); 
+   });
