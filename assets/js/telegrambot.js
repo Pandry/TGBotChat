@@ -99,7 +99,7 @@ function sendMessage(){
 //Function used to check and write down incoming messages
 function checkNewMessages(){
     var HttpMessageSender = new XMLHttpRequest();
-    var updateURL = "https://api.telegram.org/bot"+botToken+"/getUpdates";
+    var updateURL = "https://api.telegram.org/bot"+botToken+"/getUpdates?offset="+lastUpdateId+1;
     HttpMessageSender.open("GET", updateURL, true); // true for asynchronous 
     HttpMessageSender.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
