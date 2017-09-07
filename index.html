@@ -30,8 +30,9 @@
             margin-left: auto;
           }
           #chatHistory td{
-          vertical-align: middle;        
-          }
+            vertical-align: middle;
+            vertical-align: middle;        
+            }
           </style>
         
 </head>
@@ -81,17 +82,12 @@
           </div>
          
         </div>
-
-        
-
-
-
-
-        <a href="" id="clearRecentChats">Clear Recents</a><br/>
+        <a href="" id="clearRecentChats">Clear Recents</a><br/><br/>
         <h2 for="textMessage">Message:</h2><br/>
         <textarea rows="2" cols="50" class="form-control centered" name="textMessage" id="textMessage" placeholder="Message" style="width: 300px;"></textarea><br/>
 
-      <a class="btn btn-info" href="#" onclick="sendMessage()" style="margin-top:10px;">Send</a>
+      <a class="btn btn-info" href="#" onclick="sendMessage()" style="margin-top:10px;">Send</a><br/>
+      <label id="sendingAs"></label>
     
       <div class="form-group mb-0" style="margin-top:10px">
         <label class="custom-control custom-checkbox" id="notificationCheckbox">
@@ -103,7 +99,7 @@
 
   </div>
 
-    <table id="chatHistory" class="table table-striped table-hover table-bordered text-center" style="table-layout: fixed;word-wrap: break-word;  ">
+    <table id="chatHistory" class="table table-striped table-hover table-bordered text-center" style="margin-top:50px; max-width:100vw">
             <thead class="thead-inverse">
               <tr>
                 <th>#</th>
