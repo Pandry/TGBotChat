@@ -204,7 +204,7 @@ function NotificationsPermisionChecker() {
                 if (p == 'denied') {
                     swal("Oh no!", "You blocked the notifications for this site, you need to unblock them if you want to receive notifications!", "error");
                 }
-            } else if (p == 'granted' && $("#notificationCheckbox input").prop("checked")) {
+            } else if (p == 'granted') {
                 localStorage.setItem("AllowNotifications", $("#notificationCheckbox input").prop("checked"));
             }
         });
