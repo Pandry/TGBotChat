@@ -239,7 +239,7 @@ function populateHistory(moreRes){
         maxRes = $("#recentChatsDropdownDiv").get(0).childElementCount+5;
     }
     $("#recentChatsDropdownDiv a").remove();
-    for(var i = recentChats.length-1; i > recentChats.length && i >maxRes; i--){
+    for(var i = recentChats.length-1; i > recentChats.length && i < maxRes; i--){
         $("#recentChatsDropdownDiv").prepend("<a class=\"dropdown-item text-center\" href=\"#\" onclick=\"replyToId(event)\" value=\""+recentChats[recentChats.length-1 - i].id+"\">"+recentChats[recentChats.length-1 - i].nick+"</a>");
     }
     if($("#recentChatsDropdownDiv").get(0).childElementCount < recentChats.length){
