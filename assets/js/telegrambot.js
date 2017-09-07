@@ -197,7 +197,7 @@ function replyToId(event) {
 
 function NotificationsPermisionChecker() {
     if (!isNotificationsAllowed) {
-        Notification.requestPermission(function (p) {
+        Notification.requestPermission().then(function (p) {
             if (p != 'garanted') {
                 isNotificationsAllowed = false;
                 $("#notificationCheckbox input").prop("checked", false);
