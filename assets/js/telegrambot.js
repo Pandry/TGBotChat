@@ -113,6 +113,7 @@ function checkNewMessages(){
 }
 
 function NewResponseHandler(response){
+    if(response.update_id != undefined){
     for(var i = 0; i < response.result.length; i++){
         if(response.result[i].update_id > lastUpdateId){
             var rowClass;
@@ -168,6 +169,7 @@ function NewResponseHandler(response){
     }
     lastUpdateId = response.result[response.result.length-1].update_id;
     jlPage = false;
+    }
 }
 
 
