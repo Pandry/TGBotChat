@@ -157,7 +157,7 @@ function NewResponseHandler(response) {
                             console.log("Undefined message...", response.result[i]);
                         }
                         logNewMessage(response.result[i]);
-                        messageBody.replace("↵","\n");
+                        messageBody = messageBody.replace(/\n/g,"<br/>");
                         $('#chatHistory > tbody').prepend("<tr class=\"" + rowClass + "\"><td><a href=\"#\" onclick=\"replyToId(event)\" value=\"" + response.result[i].message.chat.id + ":" + response.result[i].message.message_id + "\">" + response.result[i].message.message_id + "</a></td><td>" + recDate.toLocaleString() + "</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\"" + response.result[i].message.chat.id + "\">" + response.result[i].message.chat.id + "</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\"" + response.result[i].message.from.id + "\" >@" + response.result[i].message.from.username + "</a></td><td>" + response.result[i].message.from.first_name + "</td><td class=\"" + messageClass + "\">" + messageBody + "</td></tr>");
 
                         addChatNumber(response.result[i].message.chat.id, findNickById(response.result[i].message.chat.id));
