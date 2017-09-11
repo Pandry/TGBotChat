@@ -98,6 +98,8 @@ function sendMessage() {
 
 //Function used to check and write down incoming messages
 function checkNewMessages() {
+    if(botToken==undefined){
+        return;}
     var HttpMessageSender = new XMLHttpRequest();
     if (thisBot == null) {
         HttpMessageSender.open("GET", "https://api.telegram.org/bot" + botToken + "/getMe", true); // true for asynchronous 
