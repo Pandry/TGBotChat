@@ -299,6 +299,10 @@ if (localStorage.getItem("AllowNotifications") != null) {
     $("#notificationCheckbox input").prop("checked", localStorage.getItem("AllowNotifications"));
 }
 
+if(localStorage.getItem("recentChats") == null){
+    localStorage.setItem("recentChats", JSON.stringify([]));
+}
+
 var botToken;//var containing the bot token
 var lastUpdateId = 11;//Last update id received
 setApiToken();//Try to set the token if not setted (it's not forced)
