@@ -106,7 +106,7 @@ function checkNewMessages() {
                 var response = JSON.parse(this.responseText);
                 if (response.ok == true) {
                     thisBot = response.result;
-                    $("#sendingAs").html("(Sending messages as <a href=\"https://t.me/" + thisBot.username + "\">\"@" + thisBot.username + "</a>)");
+                    $("#sendingAs").html("(Sending messages as <a href=\"https://t.me/" + thisBot.username + "\" target=\"_blank\">@" + thisBot.username + "</a>)");
                 }
             }
         };
