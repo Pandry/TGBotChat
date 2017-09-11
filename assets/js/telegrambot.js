@@ -154,7 +154,7 @@ function NewResponseHandler(response) {
                     } else {
                         try{
                         messageBody = response.result[i].message.text.replace(/\n/g,"<br/>");
-                        }catch{}
+                        }catch(){}
                         if (messageBody == undefined) {
                             console.log("Undefined message...", response.result[i]);
                         }
@@ -183,7 +183,7 @@ function NewResponseHandler(response) {
                     //Edited message
                     try{
                     response.result[i].edited_message.text = response.result[i].edited_message.text.replace(/\n/g,"<br/>");
-                    }catch{}
+                    }catch(){}
                     $('#chatHistory > tbody').prepend("<tr class=\"table-warning\"><td><a href=\"#\" onclick=\"replyToId(event)\" value=\"" + response.result[i].edited_message.chat.id + ":" + response.result[i].edited_message.message_id + "\">" + response.result[i].edited_message.message_id + "</a></td><td>" + recDate.toLocaleString() + "</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\"" + response.result[i].edited_message.chat.id + "\">" + response.result[i].edited_message.chat.id + "</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\"" + response.result[i].edited_message.from.id + "\" >@" + response.result[i].edited_message.from.username + "</a></td><td>" + response.result[i].edited_message.from.first_name + "</td><td>" + response.result[i].edited_message.text + "</td></tr>");
                 }
             }
