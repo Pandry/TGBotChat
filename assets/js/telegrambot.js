@@ -180,7 +180,7 @@ function NewResponseHandler(response) {
                 } else {
                     var recDate = new Date(response.result[i].edited_message.date * 1000);
                     //Edited message
-                    response.result[i].edited_message.text.replace("↵","\n");
+                    response.result[i].edited_message.text = response.result[i].edited_message.text.replace(/\n/g,"<br/>");;
                     $('#chatHistory > tbody').prepend("<tr class=\"table-warning\"><td><a href=\"#\" onclick=\"replyToId(event)\" value=\"" + response.result[i].edited_message.chat.id + ":" + response.result[i].edited_message.message_id + "\">" + response.result[i].edited_message.message_id + "</a></td><td>" + recDate.toLocaleString() + "</td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\"" + response.result[i].edited_message.chat.id + "\">" + response.result[i].edited_message.chat.id + "</a></td><td><a href=\"#\" onclick=\"replyToId(event)\" value=\"" + response.result[i].edited_message.from.id + "\" >@" + response.result[i].edited_message.from.username + "</a></td><td>" + response.result[i].edited_message.from.first_name + "</td><td>" + response.result[i].edited_message.text + "</td></tr>");
                 }
             }
