@@ -177,7 +177,9 @@ function NewResponseHandler(response) {
                             });
                             //Pew sound on notification
                             //Thanks to malware tech :3
-                            new Audio('https://intel.malwaretech.com/sounds/pew.mp3').play();
+                            var audioNot = new Audio('https://intel.malwaretech.com/sounds/pew.mp3');
+                            audioNot.volume = 0.2;
+                            audioNot.play()
                         }
                     }
                 } else {
