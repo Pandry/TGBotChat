@@ -250,10 +250,7 @@ function addChatNumber(chatId, nickname) {
     }
     recentChats.unshift({ "id": chatId, "nick": nickname });
     localStorage.setItem("recentChats", JSON.stringify(recentChats));
-
-    if (recentChats.length > 5) {
-        populateHistory();
-    }
+    populateHistory();
 }
 
 function populateHistory(moreRes) {
