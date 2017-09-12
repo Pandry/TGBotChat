@@ -320,7 +320,7 @@ if (typeof (Storage) !== "undefined") {
 populateHistory();
 
 
-
+$("#textMessage").emojioneArea();
 
 
 
