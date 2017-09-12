@@ -295,7 +295,7 @@ var thisBot = null;
 NotificationsPermisionChecker();
 
 if (localStorage.getItem("AllowNotifications") != null) {
-    $("#notificationCheckbox input").prop("checked", localStorage.getItem("AllowNotifications"));
+    $("#notificationCheckbox input").prop("checked", (localStorage.getItem("AllowNotifications") == 'true'));
 }
 
 if(localStorage.getItem("recentChats") == null){
