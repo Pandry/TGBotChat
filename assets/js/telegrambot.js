@@ -55,19 +55,14 @@ function setApiToken(forced) {
 //Function invoked to send a message...
 //Should be improved passing the text to be sent as a parameter
 function sendMessage() {
-    var chatMessage = $("#textMessage").val();
+    var chatMessage = $("body > div.container > div > div.emojionearea.form-control.centered > div.emojionearea-editor").val();
     var chatId = $("#chatId").val().split(':')[0];
     var replyMessageId = $("#chatId").val().split(':')[1];
 
 
     //Check if message is empty
     if (chatMessage == "") {
-        //For some reason sometimes when the sortcut CTRL + Return is pressed, the message body is empty
-        if($("#textMessage").val() != ""){
-            sendMessage();
-        }else{
-            swal("Attention please :3!", "You could have forgot to enter the message :3", "info");
-        }
+        swal("Attention please :3!", "You could have forgot to enter the message :3", "info");
         return;
     }
     //Sending
