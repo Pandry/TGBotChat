@@ -62,7 +62,12 @@ function sendMessage() {
 
     //Check if message is empty
     if (chatMessage == "") {
-        swal("Attention please :3!", "You could have forgot to enter the message :3", "info");
+        //For some reason sometimes when the sortcut CTRL + Return is pressed, the message body is empty
+        if($("#textMessage").val() != ""){
+            sendMessage();
+        }else{
+            swal("Attention please :3!", "You could have forgot to enter the message :3", "info");
+        }
         return;
     }
     //Sending
