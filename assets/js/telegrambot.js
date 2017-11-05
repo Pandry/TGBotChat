@@ -55,7 +55,8 @@ function setApiToken(forced) {
 //Function invoked to send a message...
 //Should be improved passing the text to be sent as a parameter
 function sendMessage() {
-    var chatMessage = $("body > div.container > div > div.emojionearea.form-control.centered > div.emojionearea-editor").val();
+    //var chatMessage = $("body > div.container > div > div.emojionearea.form-control.centered > div.emojionearea-editor").val();
+    var chatMessage = emojione.data("emojioneArea").getText();
     var chatId = $("#chatId").val().split(':')[0];
     var replyMessageId = $("#chatId").val().split(':')[1];
 
@@ -319,7 +320,7 @@ if (typeof (Storage) !== "undefined") {
 populateHistory();
 
 
-$("#textMessage").emojioneArea();
+var emojione = $("#textMessage").emojioneArea();
 
 
 
