@@ -1,2 +1,2 @@
 # TGBotChat
-A local-only html page to chat with a bot
+A html page to chat as a bot on telegram
